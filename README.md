@@ -4,7 +4,7 @@
 
 ### Live demo
 
-You can check demo [here](https://metta-meditation.netlify.app).
+You can check demo [here](https://DeepThink-meditation.netlify.app).
 
 <br>
 

@@ -21,7 +21,7 @@ function Header() {
   return (
     <HeaderContainer>
       <LogoText>
-        <NavLink to="/">metta</NavLink>
+        <NavLink to="/">DeepThink</NavLink>
       </LogoText>
     </HeaderContainer>
   );
