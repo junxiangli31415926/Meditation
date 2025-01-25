@@ -11,9 +11,16 @@ const Select = styled.select`
 
 function TimerBtn({ onClick, duration }) {
   const times = [
+    { duration: 60, text: '1 min' },
+    { duration: 120, text: '2 min' },
+    { duration: 180, text: '3 min' },
     { duration: 240, text: '4 min' },
-    { duration: 360, text: '6 min' },
-    { duration: 480, text: '8 min' },
+    { duration: 300, text: '5 min' },
+    { duration: 600, text: '10 min' },
+    { duration: 900, text: '15 min' },
+    { duration: 1200, text: '20 min' },
+    { duration: 1500, text: '25 min' },
+    { duration: 1800, text: '30 min' },
   ];
 
   return (

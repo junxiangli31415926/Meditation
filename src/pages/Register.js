@@ -65,8 +65,8 @@ const QuestionContainer = styled.div`
 function Register(props) {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
-  const [meditationDuration, setMeditationDuration] = useState('');
-  const [meditationType, setMeditationType] = useState('guided'); // Default to 'guided'
+  const [meditationDuration, setMeditationDuration] = useState('2');
+  const [meditationType, setMeditationType] = useState('Guided'); // Default to 'guided'
   const [step, setStep] = useState(1); // Track whether user is entering name, age, meditation duration, or meditation type
 
   const validateInput = input => {
@@ -74,31 +74,6 @@ function Register(props) {
       alert(`Please enter your ${step === 1 ? 'name' : step === 2 ? 'age' : step === 3 ? 'meditation duration' : 'meditation type'}.`);
       return false;
     }
-
-    // Add age validation for step 2
-    if (step === 2) {
-      const ageValue = parseInt(input, 10);
-      if (isNaN(ageValue) || ageValue <= 0 || ageValue >= 120) {
-        alert('Please enter a valid age between 1 and 119.');
-        return false;
-      }
-    }
-
-    // Add meditation duration validation for step 3
-    if (step === 3) {
-      const durationValue = parseInt(input, 10);
-      if (isNaN(durationValue) || durationValue < 2 || durationValue > 30) {
-        alert('Please enter a valid meditation duration between 2 and 30 minutes.');
-        return false;
-      }
-    }
-
-    // Add meditation type validation for step 4
-    if (step === 4 && !input) {
-      alert('Please select whether you would like a guided or unguided meditation.');
-      return false;
-    }
-
     return true;
   };
 
@@ -148,14 +123,24 @@ function Register(props) {
           ) : step === 3 ? (
             <>
               <MediumTitle>How long would you like to meditate today?</MediumTitle>
-              <Input onChange={handleMeditationDurationChange} value={meditationDuration} type="number" />
+              <Select onChange={handleMeditationDurationChange} value={meditationDuration}>
+              <option value="2">2 minutes</option>
+              <option value="3">3 minutes</option>
+              <option value="4">4 minutes</option>
+              <option value="5">5 minutes</option>
+              <option value="10">10 minutes</option>
+              <option value="15">15 minutes</option>
+              <option value="20">20 minutes</option>
+              <option value="25">25 minutes</option>
+              <option value="30">30 minutes</option>
+              </Select>
             </>
           ) : (
             <>
               <MediumTitle>Would you like to have guided or unguided meditation?</MediumTitle>
               <Select onChange={handleMeditationTypeChange} value={meditationType}>
-                <option value="guided">Guided</option>
-                <option value="unguided">Unguided</option>
+                <option value="Guided">Guided</option>
+                <option value="Unguided">Unguided</option>
               </Select>
             </>
           )}

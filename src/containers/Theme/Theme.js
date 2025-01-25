@@ -12,12 +12,11 @@ function Theme(props) {
   const { url, theme, bgImg } = props;
   const [audio] = useState(new Audio(url));
   const [playing, setPlaying] = useState(false);
-  const [duration, setDuration] = useState(360);
+  const savedDuration = localStorage.getItem('meditationDuration');
+  const [duration, setDuration] = useState(savedDuration*60);
   const [currentTime, setCurrentTime] = useState(0);
-
   const handleClick = useCallback(time => setDuration(time), []);
   const handleToggle = useCallback(() => setPlaying(!playing), [playing]);
-
   const updateTime = () => {
     if (playing) setDuration(duration - 1);
   };

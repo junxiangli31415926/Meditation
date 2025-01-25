@@ -31,6 +31,21 @@ const Container = styled.div`
   }
 `;
 
+const RestartButton = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #ff6f61;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ff3b2f;
+  }
+`;
+
 export const OceanWave = () => (
   <Theme url="/assets/ocean.mp3" theme="ocean" bgImg={OceanImg} />
 );
@@ -41,12 +56,14 @@ export const RainyBeach = () => (
   <Theme url="/assets/rain.mp3" theme="rain" bgImg={RainImg} />
 );
 
-function Themes() {
+function Themes({ history }) {
   const name = localStorage.getItem('name');
+  const meditationDuration = localStorage.getItem('meditationDuration'); // Retrieve the meditation duration from localStorage
+
   const themeObj = [
-    { img: Ocean, title: 'Ocean waves', link: '/ocean' },
-    { img: Mountain, title: 'Mountain view', link: '/mountain' },
-    { img: Rain, title: 'Rainy beach', link: '/rainy' },
+    { img: Ocean, title: `Ocean Waves [${meditationDuration} minutes]`, link: '/ocean' },
+    { img: Mountain, title: `Mountain View [${meditationDuration} minutes]`, link: '/mountain' },
+    { img: Rain, title: `Rainy Beach [${meditationDuration} minutes]`, link: '/rainy' },
   ];
 
   const themes = themeObj.map((theme, i) => (
@@ -55,13 +72,19 @@ function Themes() {
     </NavLink>
   ));
 
+  const handleRestart = () => {
+    localStorage.clear(); // Clear all localStorage data
+    history.push('/'); // Redirect to the initial page
+  };
+
   return (
     <Container>
-      <MediumTitle>
-        Welcome, <strong>{name}</strong>
+      <MediumTitle style={{ marginTop: '-10px' }}>
+        Welcome, <strong>{name}</strong> 🫶
       </MediumTitle>
       <SmallTitle>Choose your favorite theme</SmallTitle>
-      <CardsContainer>{themes}</CardsContainer>
+      <CardsContainer style={{ marginTop: '-30px' }}>{themes}</CardsContainer>
+      <RestartButton onClick={handleRestart} style={{ marginTop: '+50px', fontSize: '20px'}}>Restart</RestartButton>
     </Container>
   );
 }
