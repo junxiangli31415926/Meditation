@@ -65,7 +65,7 @@ const QuestionContainer = styled.div`
 function Register(props) {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
-  const [meditationDuration, setMeditationDuration] = useState('2');
+  const [meditationDuration, setMeditationDuration] = useState('5');
   const [meditationType, setMeditationType] = useState('Guided'); // Default to 'guided'
   const [step, setStep] = useState(1); // Track whether user is entering name, age, meditation duration, or meditation type
 
