@@ -124,6 +124,7 @@ function Register(props) {
             <>
               <MediumTitle>How long would you like to meditate today?</MediumTitle>
               <Select onChange={handleMeditationDurationChange} value={meditationDuration}>
+              <option value="1">1 minute</option>
               <option value="2">2 minutes</option>
               <option value="3">3 minutes</option>
               <option value="4">4 minutes</option>
