@@ -1,6 +1,6 @@
-## Metta: loving kindness
+## DeepThink
 
-> Metta is a simple meditation web application based on react.
+> DeepThink is a simple meditation web application based on react.
 
 ### Live demo
 
