@@ -1,4 +1,4 @@
-## DeepThink:
+## DeepThink: Your Personal Meditation Guide
 
 > DeepThink is a simple meditation web application based on react.
 
