@@ -9,7 +9,6 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   height: 92vh;
   width: 100vw;
   top: 0;
@@ -38,24 +37,6 @@ const Input = styled.input`
   }
 `;
 
-const Select = styled.select`
-  width: 100%;
-  height: 50px;
-  font-size: 2.5rem;
-  text-align: center;
-  border-bottom: 3px solid black;
-  margin-bottom: 5rem;
-
-  @media (max-width: 900px) {
-    margin-bottom: 0;
-  }
-
-  @media (max-width: 576px) {
-    width: 80%;
-    font-size: 1.6rem;
-  }
-`;
-
 const QuestionContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,93 +44,167 @@ const QuestionContainer = styled.div`
 `;
 
 function Register(props) {
+  const [step, setStep] = useState(1);
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [meditationDuration, setMeditationDuration] = useState('5');
-  const [meditationType, setMeditationType] = useState('Guided'); // Default to 'guided'
-  const [step, setStep] = useState(1); // Track whether user is entering name, age, meditation duration, or meditation type
+  const [meditationType, setMeditationType] = useState('Guided');
+  const [meditationPurpose, setMeditationPurpose] = useState('');
+  const [aiResponse, setAiResponse] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const validateInput = input => {
-    if (!input) {
-      alert(`Please enter your ${step === 1 ? 'name' : step === 2 ? 'age' : step === 3 ? 'meditation duration' : 'meditation type'}.`);
+  const validateInput = (input) => {
+    if (!input.trim()) {
+      alert('Please fill out this field.');
       return false;
     }
     return true;
   };
 
-  const handleNameChange = e => setName(e.target.value);
-  const handleAgeChange = e => setAge(e.target.value);
-  const handleMeditationDurationChange = e => setMeditationDuration(e.target.value);
-  const handleMeditationTypeChange = e => setMeditationType(e.target.value);
+  const handleNext = async () => {
+    if (step === 1 && validateInput(name)) {
+      localStorage.setItem('name', name);
+      setStep(2);
+    } else if (step === 2 && validateInput(age)) {
+      localStorage.setItem('age', age);
+      setStep(3);
+    } else if (step === 3 && validateInput(meditationDuration)) {
+      localStorage.setItem('meditationDuration', meditationDuration);
+      setStep(4);
+    } else if (step === 4 && validateInput(meditationType)) {
+      localStorage.setItem('meditationType', meditationType);
+      setStep(5);
+    } else if (step === 5 && validateInput(meditationPurpose)) {
+      await sendToOpenAI();
+    }
+  };
 
-  const handleClick = () => {
-    if (step === 1) {
-      if (validateInput(name)) {
-        localStorage.setItem('name', name);
-        setStep(2); // Move to the next step
+  const sendToOpenAI = async () => {
+    setLoading(true);
+    const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+
+    if (!OPENAI_API_KEY) {
+      alert('API key is missing. Please check your environment variables.');
+      setLoading(false);
+      return;
+    }
+
+    console.log('Sending request with API Key:', OPENAI_API_KEY);
+
+    const prompt = [
+      {
+        role: 'system',
+        content: 'You are a meditation assistant providing concise guidance.',
+      },
+      {
+        role: 'user',
+        content: `Provide three short meditation guidance messages based on this meditation purpose: "${meditationPurpose}"`,
       }
-    } else if (step === 2) {
-      if (validateInput(age)) {
-        localStorage.setItem('age', age);
-        setStep(3); // Move to the next step
+    ];
+
+    try {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: prompt,
+          max_tokens: 150,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API response error: ${response.status} ${response.statusText}`);
       }
-    } else if (step === 3) {
-      if (validateInput(meditationDuration)) {
-        localStorage.setItem('meditationDuration', meditationDuration);
-        setStep(4); // Move to the next step
-      }
-    } else if (step === 4) {
-      if (validateInput(meditationType)) {
-        localStorage.setItem('meditationType', meditationType);
-        props.history.push('/'); // Navigate to the next page
-      }
+
+      const responseData = await response.json();
+      console.log('API Response:', responseData);
+
+      // 解析返回数据
+      const responseText = responseData.choices[0]?.message?.content || '';
+      const parsedSentences = responseText.split('. ').slice(0, 3).map(sentence => sentence.trim());
+
+      // 存储数据
+      localStorage.setItem('meditationPurpose', meditationPurpose);
+      localStorage.setItem('meditationResponse', JSON.stringify(parsedSentences));
+
+      setAiResponse(parsedSentences);
+      setStep(6);
+    } catch (error) {
+      console.error('Error calling OpenAI API:', error);
+      alert('Failed to process meditation purpose. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <Container>
-        <QuestionContainer>
-          {step === 1 ? (
-            <>
-              <MediumTitle>What is your name?</MediumTitle>
-              <Input onChange={handleNameChange} value={name} />
-            </>
-          ) : step === 2 ? (
-            <>
-              <MediumTitle>What is your age?</MediumTitle>
-              <Input onChange={handleAgeChange} value={age} type="number" />
-            </>
-          ) : step === 3 ? (
-            <>
-              <MediumTitle>How long would you like to meditate today?</MediumTitle>
-              <Select onChange={handleMeditationDurationChange} value={meditationDuration}>
-              <option value="1">1 minute</option>
-              <option value="2">2 minutes</option>
-              <option value="3">3 minutes</option>
-              <option value="4">4 minutes</option>
-              <option value="5">5 minutes</option>
-              <option value="10">10 minutes</option>
-              <option value="15">15 minutes</option>
-              <option value="20">20 minutes</option>
-              <option value="25">25 minutes</option>
-              <option value="30">30 minutes</option>
-              </Select>
-            </>
-          ) : (
-            <>
-              <MediumTitle>Would you like to have guided or unguided meditation?</MediumTitle>
-              <Select onChange={handleMeditationTypeChange} value={meditationType}>
-                <option value="Guided">Guided</option>
-                <option value="Unguided">Unguided</option>
-              </Select>
-            </>
-          )}
-          <Button onClick={handleClick} />
-        </QuestionContainer>
-      </Container>
-    </div>
-  );
+  <div>
+    <Container>
+      <QuestionContainer>
+        {step === 1 && (
+          <>
+            <MediumTitle>What is your name?</MediumTitle>
+            <Input onChange={(e) => setName(e.target.value)} value={name} placeholder="Enter your name" />
+          </>
+        )}
+        {step === 2 && (
+          <>
+            <MediumTitle>What is your age?</MediumTitle>
+            <Input onChange={(e) => setAge(e.target.value)} value={age} type="number" placeholder="Enter your age" />
+          </>
+        )}
+        {step === 3 && (
+          <>
+            <MediumTitle>How long would you like to meditate today?</MediumTitle>
+            <Input
+              onChange={(e) => setMeditationDuration(e.target.value)}
+              value={meditationDuration}
+              placeholder="Enter duration (e.g. 10 mins)"
+            />
+          </>
+        )}
+        {step === 4 && (
+          <>
+            <MediumTitle>Would you like guided or unguided meditation?</MediumTitle>
+            <Input
+              onChange={(e) => setMeditationType(e.target.value)}
+              value={meditationType}
+              placeholder="Guided/Unguided"
+            />
+          </>
+        )}
+        {step === 5 && (
+          <>
+            <MediumTitle>What's the purpose for your meditation?</MediumTitle>
+            <Input
+              onChange={(e) => setMeditationPurpose(e.target.value)}
+              value={meditationPurpose}
+              placeholder="Enter your purpose..."
+            />
+          </>
+        )}
+        {step === 6 && aiResponse ? (
+          <>
+            <MediumTitle>Suggestions from AI:</MediumTitle>
+            <ul>
+              {aiResponse.map((sentence, index) => (
+                <li key={index}>{sentence}</li>
+              ))}
+            </ul>
+            <Button onClick={() => props.history.push('/')} text="Finish" />
+          </>
+        ) : (
+          <Button onClick={handleNext} text={loading ? 'Processing...' : 'Next'} />
+        )}
+      </QuestionContainer>
+    </Container>
+  </div>
+);
+
 }
 
 export default React.memo(Register);
