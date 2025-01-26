@@ -2,16 +2,11 @@
 
 > DeepThink is a simple meditation web application based on react.
 
-### Live demo
 
-You can check demo [here](https://DeepThink-meditation.netlify.app).
+### Demo Preview
 
-<br>
-
-### Preview
-
-![Kapture 2020-12-18 at 17 13 05-min](https://user-images.githubusercontent.com/55128990/102591232-0a8d7380-4155-11eb-97ca-e1a9fa2b136d.gif)
-
+[![Kapture 2020-12-18 at 17 13 05-min](https://user-images.githubusercontent.com/55128990/102591232-0a8d7380-4155-11eb-97ca-e1a9fa2b136d.gif)
+](https://github.com/junxiangli31415926/Meditation/issues/1#issue-2811634316)
 <br>
 
 ### Inspiration
