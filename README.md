@@ -9,6 +9,10 @@
 
 <br>
 
+### Presentation Link
+https://youtu.be/n7z3GNwYoFM
+
+
 ### Inspiration
 
 In today’s fast-paced world, stress and mental health challenges are on the rise. Many individuals are looking for ways to practice meditation, but they often struggle to find a solution that fits into their busy schedules. Existing meditation platforms can sometimes feel impersonal or too complex to navigate, leading users to abandon their mindfulness journey.
