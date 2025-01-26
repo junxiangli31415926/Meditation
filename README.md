@@ -61,4 +61,4 @@ DeepThink provides a simple yet effective meditation experience tailored to indi
 
 ### License
 
-by DeepThink👀
+by DeepSeek👀
