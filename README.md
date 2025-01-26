@@ -1,4 +1,4 @@
-## DeepThink
+## DeepThink:
 
 > DeepThink is a simple meditation web application based on react.
 
@@ -16,18 +16,20 @@ You can check demo [here](https://DeepThink-meditation.netlify.app).
 
 ### Inspiration
 
-I used to meditate briefly when I feel burnout or exhausted during studying.
-This short time really helps me to get back on track so I can focus on my study again.
-Many student might feel some pressure and stress, just like me, so I want to share this app and cheer up other friends on long journey of learning programming.<br/>
+In today’s fast-paced world, stress and mental health challenges are on the rise. Many individuals are looking for ways to practice meditation, but they often struggle to find a solution that fits into their busy schedules. Existing meditation platforms can sometimes feel impersonal or too complex to navigate, leading users to abandon their mindfulness journey.
+
+To address these issues, we developed DeepThink—a user-friendly meditation website that allows users to personalize their meditation experience with just a few clicks. Users can enter their name, age, and meditation duration to get started. They have the choice between guided and unguided sessions and can select from various calming themes to enhance their practice.
+
 Let's work hard together! We can do it!
 
 <br>
 
 ### 💫 Features
 
-- Display custom user name.
-- Provide three themes (ocaen, mountain, rain).
-- Provide three durations (4min, 6min, 8min).
+- Personalization: Name, age, and duration input.
+- Meditation Modes: Guided or unguided options.
+- Theme Selection: Ocean waves, mountain view, rainy beach.
+- Adjustable Duration: Easy control over session length.
 
 <br>
 
@@ -54,14 +56,14 @@ npm start
 
 <br>
 
-### If you finish meditation, you can get a congraturation message!
+### Future Plans
 
-<img width="1440" alt="Screen Shot 2020-12-18 at 4 26 32 PM" src="https://user-images.githubusercontent.com/55128990/102588595-0c553800-4151-11eb-8708-662cc5ace70f.png">
+We envision DeepThink evolving beyond a web platform. Our future plans include launching a mobile app to provide on-the-go meditation solutions, using AI to offer personalized meditation suggestions based on user habits, and integrating with wearables to provide real-time feedback and insights.
 
 ### Note
 
-I set meditation duration relatively shorter because we have a lot of things to study and finish each day.. 😉
+DeepThink provides a simple yet effective meditation experience tailored to individual needs. We invite you all to try it out, and we welcome your feedback and potential collaboration opportunities to further enhance our platform. 😉
 
 ### License
 
-by Suyeon
+by DeepThink👀
