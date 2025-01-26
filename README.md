@@ -5,7 +5,7 @@
 
 ### Demo Preview
 
-[![Demo](https://github.com/junxiangli31415926/Meditation/issues/1#issue-2811634316)
+![Image](https://github.com/user-attachments/assets/79cc6eca-43df-4a1a-a79c-70b0311dfda4)
 
 <br>
 
