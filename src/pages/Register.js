@@ -4,6 +4,34 @@ import styled from 'styled-components';
 import { MediumTitle } from 'style/style';
 import Button from 'components/Button/Button';
 
+const ResponseList = styled.ul`
+  font-size: 1.8rem;  /* 增大字体大小 */
+  width: 100%;
+  max-width: 600px;   /* 限制最大宽度，防止过长 */
+  word-wrap: break-word; /* 允许单词换行 */
+  white-space: pre-wrap; /* 保持文本格式，防止溢出 */
+  line-height: 1.6; /* 增加行距，提升可读性 */
+  padding: 1rem;
+  list-style: none;
+
+  @media (max-width: 576px) {
+    font-size: 1.4rem;  /* 在小屏幕上适配 */
+  }
+`;
+
+const ResponseItem = styled.li`
+  margin-bottom: 1rem;  /* 增加间距，避免挤在一起 */
+  text-align: center;
+`;
+
+const ScrollableContainer = styled.div`
+  max-height: 300px;  /* 设置最大高度 */
+  overflow-y: auto;  /* 启用垂直滚动 */
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 10px;
+`;
+
 const Container = styled.div`
   position: relative;
   display: flex;
@@ -188,18 +216,20 @@ function Register(props) {
           </>
         )}
         {step === 6 && aiResponse ? (
-          <>
-            <MediumTitle>Suggestions from AI:</MediumTitle>
-            <ul>
-              {aiResponse.map((sentence, index) => (
-                <li key={index}>{sentence}</li>
-              ))}
-            </ul>
-            <Button onClick={() => props.history.push('/')} text="Finish" />
-          </>
-        ) : (
-          <Button onClick={handleNext} text={loading ? 'Processing...' : 'Next'} />
-        )}
+  <>
+    <MediumTitle>Suggestions from AI:</MediumTitle>
+    <ScrollableContainer>
+      <ResponseList>
+        {aiResponse.map((sentence, index) => (
+          <ResponseItem key={index}>{sentence}</ResponseItem>
+        ))}
+      </ResponseList>
+    </ScrollableContainer>
+    <Button onClick={() => props.history.push('/')} text="Finish" />
+  </>
+) : (
+  <Button onClick={handleNext} text={loading ? 'Processing...' : 'Next'} />
+)}
       </QuestionContainer>
     </Container>
   </div>
