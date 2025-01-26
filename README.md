@@ -26,10 +26,10 @@ Let's work hard together! We can do it!
 
 ### 💫 Features
 
-- Personalization: Name, age, and duration input.
-- Meditation Modes: Guided or unguided options.
+- Personalization: AI-driven meditation suggestions based on user input.
+- Guided vs. Unguided Sessions: Tailored to individual preferences.
 - Theme Selection: Ocean waves, mountain view, rainy beach.
-- Adjustable Duration: Easy control over session length.
+- Time Adjustment: Flexible meditation durations.
 
 <br>
 
